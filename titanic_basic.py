@@ -10,13 +10,12 @@ from sklearn import cross_validation
 
 # read data
 df_titanic = pa.DataFrame(pa.read_csv("train.csv", index_col="PassengerId"))
+
+# preprocess data
 df_titanic.drop(["Ticket", "Cabin", "Name"], axis=1, inplace=True)
-
 df_titanic.Age.fillna(df_titanic.Age.median(), inplace=True)
-
 df_titanic.loc[df_titanic["Sex"] == "male", "Sex"] = 0
 df_titanic.loc[df_titanic["Sex"] == "female", "Sex"] = 1
-
 df_titanic.Embarked.fillna("S", inplace=True)
 df_titanic.loc[df_titanic["Embarked"] == "S", "Embarked"] = 0
 df_titanic.loc[df_titanic["Embarked"] == "C", "Embarked"] = 1
@@ -24,6 +23,11 @@ df_titanic.loc[df_titanic["Embarked"] == "Q", "Embarked"] = 2
 
 # data used for prediction
 predictors = ["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]
+
+# normalization of variables used for prediction
+for n, index in enumerate(predictors):
+    df_titanic[index+"_nc"] = (df_titanic.loc[:, index] - df_titanic.loc[:, index].mean())/df_titanic.loc[:, index].std()
+    predictors[n] = index+"_nc"
 
 # initialize regression
 alg = LinearRegression()
@@ -50,7 +54,7 @@ alg = LogisticRegression(random_state=1)
 scores = cross_validation.cross_val_score(alg,
                                           df_titanic[predictors],
                                           df_titanic.Survived,
-                                          cv=4)
+                                          cv=3)
 
 df_test = pa.read_csv("test.csv", index_col="PassengerId")
 
@@ -62,6 +66,9 @@ df_test.loc[df_test.Embarked == "S", "Embarked"] = 0
 df_test.loc[df_test.Embarked == "C", "Embarked"] = 1
 df_test.loc[df_test.Embarked == "Q", "Embarked"] = 2
 df_test.Fare.fillna(df_test.Fare.median(), inplace=True)
+for n, index in enumerate(predictors):
+    index = index[0:-3]
+    df_test[index+"_nc"] = (df_test.loc[:, index] - df_test.loc[:, index].mean())/df_test.loc[:, index].std()
 
 alg.fit(df_titanic[predictors], df_titanic.Survived)
 predictions = alg.predict(df_test[predictors])
