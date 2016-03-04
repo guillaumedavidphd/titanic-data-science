@@ -2,14 +2,14 @@
 """This script makes prediction on Titanic survivors data."""
 
 
-import pandas as pa
+import pandas as pd
 import numpy as np
 from sklearn.linear_model import LinearRegression, LogisticRegression
 from sklearn.cross_validation import KFold
 from sklearn import cross_validation
 
 # read data
-df_titanic = pa.DataFrame(pa.read_csv("train.csv", index_col="PassengerId"))
+df_titanic = pd.DataFrame(pd.read_csv("train.csv", index_col="PassengerId"))
 
 # preprocess data
 df_titanic.drop(["Ticket", "Cabin", "Name"], axis=1, inplace=True)
@@ -56,7 +56,7 @@ scores = cross_validation.cross_val_score(alg,
                                           df_titanic.Survived,
                                           cv=3)
 
-df_test = pa.read_csv("test.csv", index_col="PassengerId")
+df_test = pd.read_csv("test.csv", index_col="PassengerId")
 
 df_test.Age.fillna(df_titanic.Age.median(), inplace=True)
 df_test.loc[df_test.Sex == "male", "Sex"] = 0
@@ -73,7 +73,7 @@ for n, index in enumerate(predictors):
 alg.fit(df_titanic[predictors], df_titanic.Survived)
 predictions = alg.predict(df_test[predictors])
 
-submission = pa.DataFrame({
+submission = pd.DataFrame({
     "PassengerId": df_test.index.values,
     "Survived": predictions
     })
