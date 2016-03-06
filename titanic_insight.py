@@ -105,12 +105,14 @@ legends = ['First class, minors', 'First class, minors',
            'Third class, adults', 'Third class, adults']
 for rect, label, legend in zip(rects, labels, legends):
     height = rect.get_height()
-    ax.text(rect.get_x() + rect.get_width()/2, height-5., label, ha='center',
-            va='bottom', color='white', fontsize=16)
     if float(label) >= 40:
+        ax.text(rect.get_x() + rect.get_width()/2, height-5., label, ha='center',
+                va='bottom', color='white', fontsize=16)
         ax.text(rect.get_x() + rect.get_width()/2, height-7.5, legend,
                 ha='center', va='top', color='white', fontsize=16, rotation=90)
     else:
+        ax.text(rect.get_x() + rect.get_width()/2, height-5., label, ha='center',
+                va='bottom', color='white', fontsize=16)
         ax.text(rect.get_x() + rect.get_width()/2, height+7.5, legend,
                 ha='center', va='bottom', color='black', fontsize=16, rotation=90)
 ax.axis('tight')
@@ -146,12 +148,14 @@ legends = ['First class', 'First class', 'First class', 'First class',
            'Third class', 'Third class', 'Third class', 'Third class']
 for rect, label, legend in zip(rects, labels, legends):
     height = rect.get_height()
-    ax.text(rect.get_x() + rect.get_width()/2, height-2., label, ha='center',
-            va='bottom', color='white', fontsize=16)
     if float(label) >= 19:
+        ax.text(rect.get_x() + rect.get_width()/2, height-2., label, ha='center',
+                va='bottom', color='white', fontsize=16)
         ax.text(rect.get_x() + rect.get_width()/2, height-3, legend,
                 ha='center', va='top', color='white', fontsize=16, rotation=90)
     else:
+        ax.text(rect.get_x() + rect.get_width()/2, height-2., label, ha='center',
+                va='bottom', color='white', fontsize=16)
         ax.text(rect.get_x() + rect.get_width()/2, height+3, legend,
                 ha='center', va='bottom', color='black', fontsize=16, rotation=90)
 ax.axis('tight')

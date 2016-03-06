@@ -26,8 +26,7 @@ predictors = ["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Embarked"]
 
 # normalization of variables used for prediction
 for n, index in enumerate(predictors):
-    df_titanic[index+"_nc"] = (df_titanic.loc[:, index] - df_titanic.loc[:, index].mean())/df_titanic.loc[:, index].std()
-    predictors[n] = index+"_nc"
+    df_titanic[index] = (df_titanic.loc[:, index] - df_titanic.loc[:, index].mean())/df_titanic.loc[:, index].std()
 
 # initialize regression
 alg = LinearRegression()
@@ -67,8 +66,7 @@ df_test.loc[df_test.Embarked == "C", "Embarked"] = 1
 df_test.loc[df_test.Embarked == "Q", "Embarked"] = 2
 df_test.Fare.fillna(df_test.Fare.median(), inplace=True)
 for n, index in enumerate(predictors):
-    index = index[0:-3]
-    df_test[index+"_nc"] = (df_test.loc[:, index] - df_test.loc[:, index].mean())/df_test.loc[:, index].std()
+    df_test[index] = (df_test.loc[:, index] - df_test.loc[:, index].mean())/df_test.loc[:, index].std()
 
 alg.fit(df_titanic[predictors], df_titanic.Survived)
 predictions = alg.predict(df_test[predictors])
