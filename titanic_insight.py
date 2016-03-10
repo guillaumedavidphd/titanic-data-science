@@ -111,10 +111,21 @@ for rect, label, legend in zip(rects, labels, legends):
         ax.text(rect.get_x() + rect.get_width()/2, height-7.5, legend,
                 ha='center', va='top', color='white', fontsize=16, rotation=90)
     else:
-        ax.text(rect.get_x() + rect.get_width()/2, height-5., label, ha='center',
-                va='bottom', color='white', fontsize=16)
-        ax.text(rect.get_x() + rect.get_width()/2, height+7.5, legend,
-                ha='center', va='bottom', color='black', fontsize=16, rotation=90)
+        ax.text(rect.get_x() + rect.get_width()/2,
+                height-5.,
+                label,
+                ha='center',
+                va='bottom',
+                color='white',
+                fontsize=16)
+        ax.text(rect.get_x() + rect.get_width()/2,
+                height+7.5,
+                legend,
+                ha='center',
+                va='bottom',
+                color='black',
+                fontsize=16,
+                rotation=90)
 ax.axis('tight')
 plt.savefig("survivalByGenderClassAgeSlice.png",
             bbox_inches='tight',
@@ -137,10 +148,18 @@ grp = df_titanic.pivot_table('age', ['sex', 'survived'], 'class')
 ax = grp.plot.bar(color=tableau20, legend=False, align='center')
 #plt.legend(loc=2)
 ax.set_axis_bgcolor('white')
-plt.xticks(np.arange(0, 5), ['Female victims', 'Female survivors', 'Male victims', 'Male survivors'], rotation=0, ha ='center', fontsize=14)
+plt.xticks(np.arange(0, 5), ['Female victims',
+                             'Female survivors',
+                             'Male victims',
+                             'Male survivors'],
+           rotation=0,
+           ha='center',
+           fontsize=14)
 ax.set_xlabel("")
 plt.yticks([])
-plt.title("Average age of survivors and victims by gender and class\n", fontsize=22, loc='left')
+plt.title("Average age of survivors and victims by gender and class\n",
+          fontsize=22,
+          loc='left')
 rects = ax.patches
 labels = [int(np.round(value, decimals=0)) for value in np.concatenate(grp.T.values)]
 legends = ['First class', 'First class', 'First class', 'First class',
