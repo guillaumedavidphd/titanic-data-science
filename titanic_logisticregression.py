@@ -5,6 +5,8 @@
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn import cross_validation
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.pipeline import Pipeline
 
 # read data
 df_titanic = pd.DataFrame(pd.read_csv("train.csv", index_col="PassengerId"))
@@ -28,10 +30,15 @@ for n, index in enumerate(predictors):
 
 # initialize regression
 alg = LogisticRegression(random_state=1)
+alg = Pipeline([('poly', PolynomialFeatures(degree=2)),
+                ('linear', LogisticRegression(fit_intercept=False, n_jobs=-1))])
+
 scores = cross_validation.cross_val_score(alg,
                                           df_titanic[predictors],
                                           df_titanic.Survived,
                                           cv=3)
+
+print('Accuracy on the training set:', scores.mean())
 
 df_test = pd.read_csv("test.csv", index_col="PassengerId")
 

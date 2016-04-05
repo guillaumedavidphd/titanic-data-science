@@ -97,34 +97,3 @@ plt.savefig("CVscoreVSdegree.pdf",
             bbox_inches='tight',
             dpi=300,
             format='pdf')
-
-#    predictions = np.concatenate(predictions, axis=0)
-#    predictions[predictions > .5] = 1
-#    predictions[predictions <= .5] = 0
-
-#    accuracy = float((predictions == df_titanic.Survived).sum())/len(predictions)
-#    print(np.mean(accuracy))
-
-
-#df_test = pd.read_csv("test.csv", index_col="PassengerId")
-#
-#df_test.Age.fillna(df_titanic.Age.median(), inplace=True)
-#df_test.loc[df_test.Sex == "male", "Sex"] = 0
-#df_test.loc[df_test.Sex == "female", "Sex"] = 1
-#df_test.Embarked.fillna("S", inplace=True)
-#df_test.loc[df_test.Embarked == "S", "Embarked"] = 0
-#df_test.loc[df_test.Embarked == "C", "Embarked"] = 1
-#df_test.loc[df_test.Embarked == "Q", "Embarked"] = 2
-#df_test.Fare.fillna(df_test.Fare.median(), inplace=True)
-#for n, index in enumerate(predictors):
-#    df_test[index] = (df_test.loc[:, index] - df_test.loc[:, index].mean())/df_test.loc[:, index].std()
-#
-#predictions = alg.predict(df_test[predictors])
-#
-#submission = pd.DataFrame({
-#    "PassengerId": df_test.index.values,
-#    "Survived": predictions
-#    })
-#
-#submission.to_csv("prediction.csv", index=False)
-

@@ -6,3 +6,5 @@
 *.xml
 
 *.iml
+
+.ipynb_checkpoints/*
